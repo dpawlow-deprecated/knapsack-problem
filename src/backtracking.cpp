@@ -20,17 +20,14 @@ bool isLighter(const item& a, const item& b) {
     return a.size < b.size;
 }
 
-int smallestRemainingItemSize(int i, vector<item> const &items) {
-    int smallest = items[i].size;
-    unsigned long nItems = items.size();
-    for (int j = i+1; j < nItems; j++) {
-        smallest = min(smallest, items[j].size);
-    }
-    return smallest;
+//Poda: si ninguno de los items restantes entra en la mochila, corta la rama
+bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
+    //Precondición: el vector items debe estar ordenado crecientemente por peso
+    return items[i].size < bkp.size - bkp.load;
 }
 
 backpack backtracking(int i, backpack bkp, vector<item> const &items) {
-    if (i >= items.size() || smallestRemainingItemSize(i, items) > (bkp.size - bkp.load)) {
+    if (i >= items.size() || !hasRoomForMore(i, bkp, items)) {
         return bkp;
     }
     backpack backpackWithoutItem = backtracking(i+1, bkp, items);
@@ -57,6 +54,7 @@ backpack solve(int bkpSize, vector<item> &items) {
     bkp.load = 0;
     bkp.size = bkpSize;
 
+    //Se ordena para la poda
     sort(items.begin(), items.end(), isLighter);
 
     return backtracking(0, bkp, items);
@@ -66,7 +64,7 @@ backpack solve(int bkpSize, vector<item> &items) {
 int main() {
     item item1; item item2; item item3; item item4; item item5; item itemA; item itemB;
     itemA.size = 15; itemA.value = 2;
-    itemB.size = 15; itemB.value = 2;
+    itemB.size = 15; itemB.value = 3;
     item1.size = 3; item1.value = 10;
     item2.size = 4; item2.value = 10;
     item3.size = 1; item3.value = 100;
