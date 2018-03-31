@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -15,8 +16,21 @@ struct backpack {
     vector<item> items;
 };
 
+bool isLighter(const item& a, const item& b) {
+    return a.size < b.size;
+}
+
+int smallestRemainingItemSize(int i, vector<item> const &items) {
+    int smallest = items[i].size;
+    unsigned long nItems = items.size();
+    for (int j = i+1; j < nItems; j++) {
+        smallest = min(smallest, items[j].size);
+    }
+    return smallest;
+}
+
 backpack backtracking(int i, backpack bkp, vector<item> const &items) {
-    if (i >= items.size()) {
+    if (i >= items.size() || smallestRemainingItemSize(i, items) > (bkp.size - bkp.load)) {
         return bkp;
     }
     backpack backpackWithoutItem = backtracking(i+1, bkp, items);
@@ -37,11 +51,13 @@ backpack backtracking(int i, backpack bkp, vector<item> const &items) {
     }
 }
 
-backpack solve(int bkpSize, vector<item> const &items) {
+backpack solve(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
     bkp.size = bkpSize;
+
+    sort(items.begin(), items.end(), isLighter);
 
     return backtracking(0, bkp, items);
 };
