@@ -20,17 +20,34 @@ bool isLighter(const item& a, const item& b) {
     return a.size < b.size;
 }
 
-//Poda: si ninguno de los items restantes entra en la mochila, corta la rama
+//Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
 bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
     return items[i].size < bkp.size - bkp.load;
 }
 
-backpack backtracking(int i, backpack bkp, vector<item> const &items) {
-    if (i >= items.size() || !hasRoomForMore(i, bkp, items)) {
+//Poda de optimización: si la suma del valor actual y del valor de los items que entran en la mochila superan al máximo
+//valor alcanzado hasta el momento, corta la rama
+bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
+    //Precondición: el vector items debe estar ordenado crecientemente por peso
+    int maxSum = 0;
+    for (int j = i; j < items.size(); j++) {
+        if (items[j].size < bkp.size - bkp.load) {
+            maxSum += items[j].value;
+        } else {
+            return bkp.value + maxSum > maxValue;
+        }
+    }
+}
+
+backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxValue) {
+    if (i >= items.size() || !hasRoomForMore(i, bkp, items) || !maxValueIsReachable(i, bkp, items, maxValue)) {
+        if (bkp.value > maxValue) {
+            maxValue = bkp.value;
+        }
         return bkp;
     }
-    backpack backpackWithoutItem = backtracking(i+1, bkp, items);
+    backpack backpackWithoutItem = backtracking(i + 1, bkp, items, maxValue);
 
     if (bkp.load + items[i].size > bkp.size) {
         return backpackWithoutItem;
@@ -39,7 +56,7 @@ backpack backtracking(int i, backpack bkp, vector<item> const &items) {
     bkp.load += items[i].size;
     bkp.value += items[i].value;
     bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtracking(i+1, bkp, items);
+    backpack backpackWithItem = backtracking(i + 1, bkp, items, maxValue);
 
     if (backpackWithItem.value > backpackWithoutItem.value) {
         return backpackWithItem;
@@ -57,7 +74,7 @@ backpack solve(int bkpSize, vector<item> &items) {
     //Se ordena para la poda
     sort(items.begin(), items.end(), isLighter);
 
-    return backtracking(0, bkp, items);
+    return backtracking(0, bkp, items, 0);
 };
 
 
