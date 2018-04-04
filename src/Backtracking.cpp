@@ -1,20 +1,10 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include "types.h"
+#include "Backtracking.h"
 
 using namespace std;
-
-struct item {
-    int size;
-    int value;
-};
-
-struct backpack {
-    int size;
-    int load;
-    int value;
-    vector<item> items;
-};
 
 bool isLighter(const item& a, const item& b) {
     return a.size < b.size;
@@ -26,7 +16,7 @@ bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
     return items[i].size < bkp.size - bkp.load;
 }
 
-//Poda de optimización: si la suma del valor actual y del valor de los items que entran en la mochila superan al máximo
+//Poda de optimalidad: si la suma del valor actual y del valor de los items que entran en la mochila superan al máximo
 //valor alcanzado hasta el momento, corta la rama
 bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
@@ -78,7 +68,7 @@ backpack solve(int bkpSize, vector<item> &items) {
 };
 
 
-int main() {
+void test() {
     item item1; item item2; item item3; item item4; item item5; item itemA; item itemB;
     itemA.size = 15; itemA.value = 2;
     itemB.size = 15; itemB.value = 3;
@@ -94,6 +84,4 @@ int main() {
 
     cout<<bkp.value<<endl;
     cout<<bkp.load;
-
-    return 1;
 }
