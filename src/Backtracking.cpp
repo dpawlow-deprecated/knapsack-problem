@@ -13,21 +13,20 @@ bool isLighter(const item& a, const item& b) {
 //Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
 bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
-    return items[i].size < bkp.size - bkp.load;
+    return items[i].size <= bkp.size - bkp.load;
 }
 
 //Poda de optimalidad: si la suma del valor actual y del valor de los items que entran en la mochila superan al máximo
 //valor alcanzado hasta el momento, corta la rama
 bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
-    int maxSum = 0;
+    int sum = 0;
     for (int j = i; j < items.size(); j++) {
         if (items[j].size < bkp.size - bkp.load) {
-            maxSum += items[j].value;
-        } else {
-            return bkp.value + maxSum > maxValue;
+            sum += items[j].value;
         }
     }
+    return bkp.value + sum > maxValue;
 }
 
 backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxValue) {
