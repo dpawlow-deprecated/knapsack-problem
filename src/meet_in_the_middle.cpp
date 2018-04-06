@@ -2,12 +2,9 @@
 #include <vector>
 #include <cmath>
 #include "types.h"
+#include "utilities.h"
 
 using namespace std;
-
-int isOddSacar(int x) {
-    return x % 2 == 1;
-}
 
 void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backpacks) {
     auto nOfCombinations = u_int(pow(2, items.size()));
@@ -19,16 +16,7 @@ void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backp
         bkp.load = 0;
 
         int combination = i;
-        while (combination > 0) {
-            if (isOddSacar(combination)) {
-                //log2 para obtener la posición del bit en el número
-                double position = log2(combination);
-                bkp.value += items[position].value;
-                bkp.load += items[position].size;
-                bkp.items.push_back(items[position]);
-            }
-            combination /= 2;
-        }
+        getCombination(combination, bkp, items);
 
         //Bucketsort de mochilas por peso, considerando sólo la de mayor valor para cada peso
         if (bkp.load <= bkpSize /*&& backpacks[bkp.load].value != nullptr && backpacks[bkp.load].value < bkp.value*/) {
@@ -89,5 +77,6 @@ backpack solveB(int bkpSize, vector<item> const &items) {
             }
         }
     }
+    
     return maxValueBkp;
 }

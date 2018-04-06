@@ -3,12 +3,9 @@
 #include <cmath>
 #include "types.h"
 #include "bruteforce.h"
+#include "utilities.h"
 
 using namespace std;
-
-int isOdd(int x) {
-    return x % 2 == 1;
-}
 
 backpack solveA(int bkpSize, vector<item> const &items) {
     backpack ansBackpack;
@@ -23,16 +20,7 @@ backpack solveA(int bkpSize, vector<item> const &items) {
         bkp.load = 0;
     
         int combination = i;
-        while (combination > 0) {
-            if (isOdd(combination)) {
-                //log2 para obtener la posición del bit en el número
-                double position = log2(combination);
-                bkp.value += items[position].value;
-                bkp.load += items[position].size;
-                bkp.items.push_back(items[position]);
-            }
-            combination /= 2;
-        }
+        getCombination(combination, bkp, items);
 
         if (bkp.load <= bkpSize && bkp.value >= ansBackpack.value) {
             ansBackpack = bkp;
