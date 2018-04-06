@@ -77,6 +77,6 @@ backpack solveB(int bkpSize, vector<item> const &items) {
             }
         }
     }
-    
+
     return maxValueBkp;
 }

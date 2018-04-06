@@ -10,14 +10,17 @@ int isOdd(int x) {
 }
 
 void getCombination(int combination, backpack &bkp, vector<item> const &items) {
+    //BitPosition para determinar en qué dígito del bit me estoy fijando
+    int bitPosition = 0;
+    vector<char> prueba;
     while (combination > 0) {
         if (isOdd(combination)) {
-            //log2 para obtener la posición del bit en el número
-            double position = log2(combination);
-            bkp.value += items[position].value;
-            bkp.load += items[position].size;
-            bkp.items.push_back(items[position]);
+            bkp.value += items[bitPosition].value;
+            bkp.load += items[bitPosition].size;
+            bkp.items.push_back(items[bitPosition]);
+
         }
+        bitPosition++;
         combination /= 2;
     }
 }

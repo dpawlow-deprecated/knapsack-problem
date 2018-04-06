@@ -22,7 +22,7 @@ backpack solveA(int bkpSize, vector<item> const &items) {
         int combination = i;
         getCombination(combination, bkp, items);
 
-        if (bkp.load <= bkpSize && bkp.value >= ansBackpack.value) {
+        if (bkp.load <= bkpSize && bkp.value > ansBackpack.value) {
             ansBackpack = bkp;
         }
     }

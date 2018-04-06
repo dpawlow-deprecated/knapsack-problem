@@ -4,7 +4,6 @@
 #include <vector>
 #include "types.h"
 
-int isOdd(int x);
 void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backpacks);
 backpack solveA(int bkpSize, vector<item> const &items);
 
