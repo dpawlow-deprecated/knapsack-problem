@@ -1,6 +1,7 @@
 #include <iostream>
-#include "Backtracking.h"
-#include "Bruteforce.h"
+#include "backtracking.h"
+#include "bruteforce.h"
+#include "meet_in_the_middle.h"
 
 int main(){
 
@@ -16,13 +17,21 @@ int main(){
 
     vector<item> items = {item1, item2, item3, item4, item5};
 
-    backpack bkp = solve(15, items);
-    cout<<bkp.value<<endl;
-    cout<<bkp.load<<endl;
+    backpack bkp1 = solveA(15, items);
+    cout<<"Bruteforce: "<<endl;
+    cout<<bkp1.value<<endl;
+    cout<<bkp1.load<<endl;
 
     backpack bkp2 = solveB(15, items);
+    cout<<"Meet in the middle: "<<endl;
     cout<<bkp2.value<<endl;
     cout<<bkp2.load<<endl;
+
+    backpack bkp3 = solveC(15, items);
+    cout<<"Backtracking: "<<endl;
+    cout<<bkp3.value<<endl;
+    cout<<bkp3.load<<endl;
+
 
 
 

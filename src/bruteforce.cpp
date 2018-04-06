@@ -2,16 +2,15 @@
 #include <vector>
 #include <cmath>
 #include "types.h"
-#include "Bruteforce.h"
+#include "bruteforce.h"
 
 using namespace std;
-
 
 int isOdd(int x) {
     return x % 2 == 1;
 }
 
-backpack solveB(int bkpSize, vector<item> const &items) {
+backpack solveA(int bkpSize, vector<item> const &items) {
     backpack ansBackpack;
     ansBackpack.value = 0;
     ansBackpack.load = 0;

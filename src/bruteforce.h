@@ -5,6 +5,7 @@
 #include "types.h"
 
 int isOdd(int x);
-backpack solveB(int bkpSize, vector<item> const &items);
+void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backpacks);
+backpack solveA(int bkpSize, vector<item> const &items);
 
 #endif //KNAPSACK_PROBLEM_BRUTEFORCE_H

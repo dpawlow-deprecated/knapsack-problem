@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "types.h"
-#include "Backtracking.h"
+#include "backtracking.h"
 
 using namespace std;
 
@@ -54,7 +54,7 @@ backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxVal
     }
 }
 
-backpack solve(int bkpSize, vector<item> &items) {
+backpack solveC(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
@@ -79,7 +79,7 @@ void test() {
 
     vector<item> items = {itemA, item1, item2, item3, item4, item5, itemB};
 
-    backpack bkp = solve(15, items);
+    backpack bkp = solveC(15, items);
 
     cout<<bkp.value<<endl;
     cout<<bkp.load;
