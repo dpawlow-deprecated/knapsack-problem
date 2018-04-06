@@ -16,8 +16,8 @@ bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
     return items[i].size <= bkp.size - bkp.load;
 }
 
-//Poda de optimalidad: si la suma del valor actual y del valor de los items que entran en la mochila superan al máximo
-//valor alcanzado hasta el momento, corta la rama
+//Poda de optimalidad: si la suma del valor actual y de la suma del valor de los items que entran en la mochila
+//no superan al máximo valor alcanzado hasta el momento, corta la rama
 bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
     int sum = 0;

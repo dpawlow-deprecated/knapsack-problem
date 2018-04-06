@@ -19,7 +19,7 @@ void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backp
         getCombination(combination, bkp, items);
 
         //Bucketsort de mochilas por peso, considerando sólo la de mayor valor para cada peso
-        if (bkp.load <= bkpSize /*&& backpacks[bkp.load].value != nullptr && backpacks[bkp.load].value < bkp.value*/) {
+        if (bkp.load <= bkpSize && backpacks[bkp.load].value < bkp.value) {
             backpacks[bkp.load] = bkp;
         }
     }
