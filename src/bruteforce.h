@@ -4,7 +4,7 @@
 #include <vector>
 #include "types.h"
 
-void solvePortion(int bkpSize, vector<item> const &items, struct backpack *backpacks);
+void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> backpacks);
 backpack solveA(int bkpSize, vector<item> const &items);
 
 #endif //KNAPSACK_PROBLEM_BRUTEFORCE_H

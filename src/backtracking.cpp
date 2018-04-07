@@ -10,23 +10,34 @@ bool isLighter(const item& a, const item& b) {
     return a.size < b.size;
 }
 
+bool isMoreValuable(const item& a, const item& b){
+    return a.value > b.value;
+}
+
 //Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
 bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
     return items[i].size <= bkp.size - bkp.load;
 }
 
+int solveFractionalKnapsackProblem(int i, backpack const &bkp, vector<item> const &items) {
+    int extraLoad = 0;
+    int extraValue = 0;
+    int j = i;
+    while (bkp.load + extraLoad <= bkp.size && j < items.size()) {
+        extraLoad += items[j].size;
+        extraValue += items[j].value;
+        j++;
+    }
+    return extraValue;
+}
+
 //Poda de optimalidad: si la suma del valor actual y de la suma del valor de los items que entran en la mochila
 //no superan al máximo valor alcanzado hasta el momento, corta la rama
 bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
     //Precondición: el vector items debe estar ordenado crecientemente por peso
-    int sum = 0;
-    for (int j = i; j < items.size(); j++) {
-        if (items[j].size < bkp.size - bkp.load) {
-            sum += items[j].value;
-        }
-    }
-    return bkp.value + sum > maxValue;
+    int maxPossibleRemainingValue = solveFractionalKnapsackProblem(i, bkp, items);
+    return bkp.value + maxPossibleRemainingValue > maxValue;
 }
 
 backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxValue) {
@@ -60,8 +71,10 @@ backpack solveC(int bkpSize, vector<item> &items) {
     bkp.load = 0;
     bkp.size = bkpSize;
 
-    //Se ordena para la poda
-    sort(items.begin(), items.end(), isLighter);
+    //Se ordena primero por valor decreciente y luego con un algoritmo estable por tamaño creciente
+    //El ordenamiento se usa en las podas
+    sort(items.begin(), items.end(), isMoreValuable);
+    stable_sort(items.begin(), items.end(), isLighter);
 
     return backtracking(0, bkp, items, 0);
 };
