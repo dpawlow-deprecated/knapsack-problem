@@ -4,6 +4,7 @@
 #include <vector>
 #include "types.h"
 
+bool isMoreValuable(const item& a, const item& b);
 bool isLighter(const item&, const item&);
 bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items);
 bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue);

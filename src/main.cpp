@@ -1,7 +1,9 @@
 #include <iostream>
+#include <chrono>
 #include "backtracking.h"
 #include "bruteforce.h"
 #include "meet_in_the_middle.h"
+#include "experiments/compare_backtracking.h"
 
 void printResult(backpack bkp, string text) {
     cout<<text;
@@ -81,9 +83,14 @@ void test3(){
 }
 
 int main(){
+    cout << "steady_clock" << endl;
+    cout << chrono::steady_clock::period::num << endl;
+    cout << chrono::steady_clock::period::den << endl;
+    cout << "steady = " << boolalpha << chrono::steady_clock::is_steady << endl << endl;
+
+    cout << "experimento;funcion;n;tiempo;" << endl;
+    //randomValuesAndSizes();
     test1();
-    test2();
-    test3();
 
     return 1;
 }
