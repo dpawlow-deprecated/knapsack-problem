@@ -40,14 +40,14 @@ bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, 
     return bkp.value + maxPossibleRemainingValue > maxValue;
 }
 
-backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxValue) {
+backpack backtrackingRecursion(int i, backpack bkp, vector<item> const &items, int maxValue) {
     if (i >= items.size() || !hasRoomForMore(i, bkp, items) || !maxValueIsReachable(i, bkp, items, maxValue)) {
         if (bkp.value > maxValue) {
             maxValue = bkp.value;
         }
         return bkp;
     }
-    backpack backpackWithoutItem = backtracking(i + 1, bkp, items, maxValue);
+    backpack backpackWithoutItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
 
     if (bkp.load + items[i].size > bkp.size) {
         return backpackWithoutItem;
@@ -56,7 +56,7 @@ backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxVal
     bkp.load += items[i].size;
     bkp.value += items[i].value;
     bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtracking(i + 1, bkp, items, maxValue);
+    backpack backpackWithItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
 
     if (backpackWithItem.value > backpackWithoutItem.value) {
         return backpackWithItem;
@@ -65,7 +65,7 @@ backpack backtracking(int i, backpack bkp, vector<item> const &items, int maxVal
     }
 }
 
-backpack solveC(int bkpSize, vector<item> &items) {
+backpack backtracking(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
@@ -76,7 +76,7 @@ backpack solveC(int bkpSize, vector<item> &items) {
     sort(items.begin(), items.end(), isMoreValuable);
     stable_sort(items.begin(), items.end(), isLighter);
 
-    return backtracking(0, bkp, items, 0);
+    return backtrackingRecursion(0, bkp, items, 0);
 };
 
 
@@ -92,7 +92,7 @@ void test() {
 
     vector<item> items = {itemA, item1, item2, item3, item4, item5, itemB};
 
-    backpack bkp = solveC(15, items);
+    backpack bkp = backtracking(15, items);
 
     cout<<bkp.value<<endl;
     cout<<bkp.load;

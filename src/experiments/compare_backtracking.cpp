@@ -7,6 +7,8 @@
 #include "../types.h"
 #include "backtracking_sin_poda.h"
 #include "backtracking_poda_factibilidad.h"
+#include "backtracking_poda_optimalidad.h"
+#include "../backtracking.h"
 #include "config.h"
 
 using namespace std;
@@ -35,7 +37,7 @@ void randomValuesAndSizes() {
             auto end_sin_podas = chrono::steady_clock::now();
             auto diff_sin_podas = end_sin_podas - start_sin_podas;
 
-            cout << "compare_backtracking;randomValuesAndSizes;backtracking_sin_poda" << n << ";"
+            cout << "compare_backtracking;randomValuesAndSizes;backtracking_sin_poda;" << n << ";"
                  << chrono::duration <double, milli> (diff_sin_podas).count() << "ms" << endl;
 
             auto start_factibilidad = chrono::steady_clock::now();
@@ -43,8 +45,24 @@ void randomValuesAndSizes() {
             auto end_factibilidad = chrono::steady_clock::now();
             auto diff_factibilidad = end_factibilidad - start_factibilidad;
 
-            cout << "compare_backtracking;randomValuesAndSizes;backtracking_factibilidad" << n << ";"
+            cout << "compare_backtracking;randomValuesAndSizes;backtracking_factibilidad;" << n << ";"
                  << chrono::duration <double, milli> (diff_factibilidad).count() << "ms" << endl;
+
+            auto start_optimalidad = chrono::steady_clock::now();
+            bkp = backtrackingPodaOptimalidad(n, items);
+            auto end_optimalidad = chrono::steady_clock::now();
+            auto diff_optimalidad = end_optimalidad - start_optimalidad;
+
+            cout << "compare_backtracking;randomValuesAndSizes;backtracking_optimalidad;" << n << ";"
+                 << chrono::duration <double, milli> (diff_optimalidad).count() << "ms" << endl;
+
+            auto start_backtracking = chrono::steady_clock::now();
+            bkp = backtracking(n, items);
+            auto end_backtracking = chrono::steady_clock::now();
+            auto diff_backtracking = end_backtracking - start_backtracking;
+
+            cout << "compare_backtracking;randomValuesAndSizes;backtracking_dos_podas;" << n << ";"
+                 << chrono::duration <double, milli> (diff_backtracking).count() << "ms" << endl;
 
 
         }

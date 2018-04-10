@@ -35,7 +35,7 @@ void test1() {
     backpack bkp2 = solveB(15, items);
     printResult(bkp2, "Meet in the middle: ");
 
-    backpack bkp3 = solveC(15, items);
+    backpack bkp3 = backtracking(15, items);
     printResult(bkp3, "Backtracking: ");
 }
 
@@ -56,7 +56,7 @@ void test2() {
     backpack bkp2 = solveB(15, items);
     printResult(bkp2, "Meet in the middle: ");
 
-    backpack bkp3 = solveC(15, items);
+    backpack bkp3 = backtracking(15, items);
     printResult(bkp3, "Backtracking: ");
 }
 
@@ -77,7 +77,7 @@ void test3(){
     backpack bkp2 = solveB(25, items);
     printResult(bkp2, "Meet in the middle: ");
 
-    backpack bkp3 = solveC(25, items);
+    backpack bkp3 = backtracking(25, items);
     printResult(bkp3, "Backtracking: ");
 
 }
@@ -88,9 +88,8 @@ int main(){
     cout << chrono::steady_clock::period::den << endl;
     cout << "steady = " << boolalpha << chrono::steady_clock::is_steady << endl << endl;
 
-    cout << "experimento;funcion;n;tiempo;" << endl;
-    //randomValuesAndSizes();
-    test1();
+    cout << "experimento;funcion;algoritmo;n;tiempo;" << endl;
+    randomValuesAndSizes();
 
     return 1;
 }

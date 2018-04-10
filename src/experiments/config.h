@@ -3,7 +3,7 @@
 
 /* compare_backtracking */
 enum compare_backtracking {
-    cantidadMaximaDeItems = 64,
+    cantidadMaximaDeItems = 100,
     cantidadRepeticiones = 50,
 };
 
