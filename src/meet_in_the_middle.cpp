@@ -1,8 +1,8 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "types.h"
-#include "utilities.h"
+#include "utilities/types.h"
+#include "utilities/utilities.h"
 
 using namespace std;
 

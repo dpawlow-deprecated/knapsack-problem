@@ -4,7 +4,7 @@
 #include <algorithm>
 #include <random>
 
-#include "../types.h"
+#include "../utilities/types.h"
 #include "backtracking_sin_poda.h"
 #include "backtracking_poda_factibilidad.h"
 #include "backtracking_poda_optimalidad.h"

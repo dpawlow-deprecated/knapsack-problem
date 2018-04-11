@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../types.h"
+#include "../utilities/types.h"
 
 using namespace std;
 

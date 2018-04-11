@@ -2,7 +2,7 @@
 #define KNAPSACK_PROBLEM_BRUTEFORCE_H
 
 #include <vector>
-#include "types.h"
+#include "utilities/types.h"
 
 void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> backpacks);
 backpack solveA(int bkpSize, vector<item> const &items);

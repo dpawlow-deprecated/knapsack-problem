@@ -2,7 +2,7 @@
 #define KNAPSACK_PROBLEM_BACKTRACKING_H
 
 #include <vector>
-#include "types.h"
+#include "utilities/types.h"
 
 bool isMoreValuable(const item& a, const item& b);
 bool isLighter(const item&, const item&);

@@ -2,7 +2,7 @@
 #define KNAPSACK_PROBLEM_BACKTRACKING_PODA_FACTIBILIDAD_H
 
 #include <vector>
-#include "../types.h"
+#include "../utilities/types.h"
 
 backpack backtrackingFactibilidadRecursion(int i, backpack bkp, vector<item> const &items);
 backpack backtrackingPodaFactibilidad(int bkpSize, vector<item> &items);

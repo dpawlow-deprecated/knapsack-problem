@@ -2,7 +2,7 @@
 #define KNAPSACK_PROBLEM_MEET_IN_THE_MIDDLE_H
 
 #include <vector>
-#include "types.h"
+#include "utilities/types.h"
 
 int isOdd(int x);
 backpack solveB(int bkpSize, vector<item> const &items);
