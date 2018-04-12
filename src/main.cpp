@@ -6,7 +6,8 @@
 #include "dynamic_programming.h"
 
 #include "experiments/compare_backtracking.h"
-
+#include "experiments/compare_algorithms.h"
+/*
 void printResult(backpack bkp, string text) {
     cout<<text;
     cout<<"Value: "<<bkp.value<<", ";
@@ -30,16 +31,16 @@ void test1() {
 
     vector<item> items = {itemA, item1, item2, item3, item4, item5, item6, itemB};
     cout<<"Test1. Valor Correcto: 135"<<endl;
-/*
-    backpack bkp1 = solveA(15, items);
+
+    backpack bkp1 = bruteforce(15, items);
     printResult(bkp1, "Bruteforce: ");
 
-    backpack bkp2 = solveB(15, items);
+    backpack bkp2 = meet_in_the_middle(15, items);
     printResult(bkp2, "Meet in the middle: ");
 
     backpack bkp3 = backtracking(15, items);
     printResult(bkp3, "Backtracking: ");
-*/
+
     cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
 
 }
@@ -54,16 +55,16 @@ void test2() {
     vector<item> items = {item1, item2, item3, item5};
     cout<<"Test2. Valor Correcto: 135"<<endl;
 
-/*
-    backpack bkp1 = solveA(15, items);
+
+    backpack bkp1 = bruteforce(15, items);
     printResult(bkp1, "Bruteforce: ");
 
-    backpack bkp2 = solveB(15, items);
+    backpack bkp2 = meet_in_the_middle(15, items);
     printResult(bkp2, "Meet in the middle: ");
 
     backpack bkp3 = backtracking(15, items);
     printResult(bkp3, "Backtracking: ");
-*/
+
     cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
 
 }
@@ -78,34 +79,30 @@ void test3(){
 
     vector<item> items = {item1, item2, item3, item4, item5};
     cout<<"Test3. Valor Correcto: 29"<<endl;
-/*
-    backpack bkp1 = solveA(25, items);
+
+    backpack bkp1 = bruteforce(25, items);
     printResult(bkp1, "Bruteforce: ");
 
-    backpack bkp2 = solveB(25, items);
+    backpack bkp2 = meet_in_the_middle(25, items);
     printResult(bkp2, "Meet in the middle: ");
 
     backpack bkp3 = backtracking(25, items);
     printResult(bkp3, "Backtracking: ");
-*/
-    cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
+
+    cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
 
 
 
 }
-
+*/
 int main(){
-    /*cout << "steady_clock" << endl;
+    cout << "steady_clock" << endl;
     cout << chrono::steady_clock::period::num << endl;
     cout << chrono::steady_clock::period::den << endl;
     cout << "steady = " << boolalpha << chrono::steady_clock::is_steady << endl << endl;
 
     cout << "experimento;funcion;algoritmo;n;tiempo;" << endl;
-    randomValuesAndSizes();
-    */
-    test1();
-    test2();
-    test3();
+    randomValuesSizesBkp();
 
 
     return 1;

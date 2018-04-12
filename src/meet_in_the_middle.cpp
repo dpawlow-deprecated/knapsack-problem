@@ -24,7 +24,7 @@ void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> &back
     }
 }
 
-backpack solveB(int bkpSize, vector<item> const &items) {
+backpack meet_in_the_middle(int bkpSize, vector<item> const &items) {
     vector<item>::const_iterator first = items.begin();
     vector<item>::const_iterator last = items.begin() + items.size()/2;
     vector<item> firstHalf(first, last);

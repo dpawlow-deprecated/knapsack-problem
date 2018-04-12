@@ -9,7 +9,7 @@
 
 using namespace std;
 
-backpack solveA(int bkpSize, vector<item> const &items) {
+backpack bruteforce(int bkpSize, vector<item> const &items) {
     backpack ansBackpack;
     ansBackpack.value = 0;
     ansBackpack.load = 0;
