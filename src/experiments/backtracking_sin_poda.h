@@ -5,6 +5,6 @@
 #include "../utilities/types.h"
 
 backpack backtrackingSinPodaRecursion(int i, backpack bkp, vector<item> const &items);
-backpack backtrackingSinPoda(int bkpSize, vector<item> &items);
+int backtrackingSinPoda(int bkpSize, vector<item> &items);
 
 #endif //KNAPSACK_PROBLEM_BACKTRACKING_SIN_PODA_H

@@ -31,7 +31,7 @@ backpack backtrackingOptimalidadRecursion(int i, backpack bkp, vector<item> cons
     }
 }
 
-backpack backtrackingPodaOptimalidad(int bkpSize, vector<item> &items) {
+int backtrackingPodaOptimalidad(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
@@ -42,5 +42,5 @@ backpack backtrackingPodaOptimalidad(int bkpSize, vector<item> &items) {
     sort(items.begin(), items.end(), isMoreValuable);
     stable_sort(items.begin(), items.end(), isLighter);
 
-    return backtrackingOptimalidadRecursion(0, bkp, items, 0);
+    return backtrackingOptimalidadRecursion(0, bkp, items, 0).value;
 };

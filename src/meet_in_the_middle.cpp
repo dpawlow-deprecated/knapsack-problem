@@ -24,7 +24,7 @@ void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> &back
     }
 }
 
-backpack meet_in_the_middle(int bkpSize, vector<item> const &items) {
+int meet_in_the_middle(int bkpSize, vector<item> const &items) {
     vector<item>::const_iterator first = items.begin();
     vector<item>::const_iterator last = items.begin() + items.size()/2;
     vector<item> firstHalf(first, last);
@@ -47,16 +47,8 @@ backpack meet_in_the_middle(int bkpSize, vector<item> const &items) {
             if (b1.load + b2.load < bkpSize && b1.value + b2.value > maxValueBkp.value) {
                 maxValueBkp.value = b1.value + b2.value;
                 maxValueBkp.load = b1.load + b2.load;
-                if (b1.items.size() > b2.items.size()) {
-                    maxValueBkp.items = b1.items;
-                    maxValueBkp.items.insert(maxValueBkp.items.end(), b2.items.begin(), b2.items.end());
-                } else {
-                    maxValueBkp.items = b2.items;
-                    maxValueBkp.items.insert(maxValueBkp.items.end(), b1.items.begin(), b1.items.end());
-                }
             }
         }
     }
-
-    return maxValueBkp;
+    return maxValueBkp.value;
 }

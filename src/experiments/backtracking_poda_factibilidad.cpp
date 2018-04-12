@@ -28,7 +28,7 @@ backpack backtrackingFactibilidadRecursion(int i, backpack bkp, vector<item> con
     }
 }
 
-backpack backtrackingPodaFactibilidad(int bkpSize, vector<item> &items) {
+int backtrackingPodaFactibilidad(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
@@ -39,5 +39,5 @@ backpack backtrackingPodaFactibilidad(int bkpSize, vector<item> &items) {
     sort(items.begin(), items.end(), isMoreValuable);
     stable_sort(items.begin(), items.end(), isLighter);
 
-    return backtrackingFactibilidadRecursion(0, bkp, items);
+    return backtrackingFactibilidadRecursion(0, bkp, items).value;
 };

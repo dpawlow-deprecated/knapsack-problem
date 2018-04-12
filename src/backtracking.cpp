@@ -65,7 +65,7 @@ backpack backtrackingRecursion(int i, backpack bkp, vector<item> const &items, i
     }
 }
 
-backpack backtracking(int bkpSize, vector<item> &items) {
+int backtracking(int bkpSize, vector<item> &items) {
     backpack bkp;
     bkp.value = 0;
     bkp.load = 0;
@@ -76,24 +76,5 @@ backpack backtracking(int bkpSize, vector<item> &items) {
     sort(items.begin(), items.end(), isMoreValuable);
     stable_sort(items.begin(), items.end(), isLighter);
 
-    return backtrackingRecursion(0, bkp, items, 0);
+    return backtrackingRecursion(0, bkp, items, 0).value;
 };
-
-
-void test() {
-    item item1; item item2; item item3; item item4; item item5; item itemA; item itemB;
-    itemA.size = 15; itemA.value = 2;
-    itemB.size = 15; itemB.value = 3;
-    item1.size = 3; item1.value = 10;
-    item2.size = 4; item2.value = 10;
-    item3.size = 1; item3.value = 100;
-    item4.size = 10; item4.value = 20;
-    item5.size = 5; item5.value = 15;
-
-    vector<item> items = {itemA, item1, item2, item3, item4, item5, itemB};
-
-    backpack bkp = backtracking(15, items);
-
-    cout<<bkp.value<<endl;
-    cout<<bkp.load;
-}

@@ -33,7 +33,7 @@ void randomValuesAndSizes() {
                 items.push_back(item);
             }
             auto start_sin_podas = chrono::steady_clock::now();
-            backpack bkp = backtrackingSinPoda(n, items);
+            int bkp = backtrackingSinPoda(n, items);
             auto end_sin_podas = chrono::steady_clock::now();
             auto diff_sin_podas = end_sin_podas - start_sin_podas;
 
@@ -90,7 +90,7 @@ void constantSizesRandomValues() {
                 items.push_back(item);
             }
             auto start_sin_podas = chrono::steady_clock::now();
-            backpack bkp = backtrackingSinPoda(n, items);
+            int bkp = backtrackingSinPoda(n, items);
             auto end_sin_podas = chrono::steady_clock::now();
             auto diff_sin_podas = end_sin_podas - start_sin_podas;
 

@@ -7,14 +7,10 @@
 
 #include "experiments/compare_backtracking.h"
 #include "experiments/compare_algorithms.h"
-/*
-void printResult(backpack bkp, string text) {
+
+void printResult(int value, string text) {
     cout<<text;
-    cout<<"Value: "<<bkp.value<<", ";
-    cout<<"Load: "<<bkp.load<<"."<<endl;
-    for (int i = 0; i < bkp.items.size(); i++) {
-        cout<<"Item: valor "<<bkp.items[i].value<<", carga "<<bkp.items[i].size<<endl;
-    }
+    cout<<"Value: "<<value<<", ";
     cout<<endl;
 }
 
@@ -32,17 +28,11 @@ void test1() {
     vector<item> items = {itemA, item1, item2, item3, item4, item5, item6, itemB};
     cout<<"Test1. Valor Correcto: 135"<<endl;
 
-    backpack bkp1 = bruteforce(15, items);
-    printResult(bkp1, "Bruteforce: ");
-
-    backpack bkp2 = meet_in_the_middle(15, items);
-    printResult(bkp2, "Meet in the middle: ");
-
-    backpack bkp3 = backtracking(15, items);
-    printResult(bkp3, "Backtracking: ");
+    printResult(bruteforce(15, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(backtracking(15, items), "Backtracking: ");
 
     cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
-
 }
 
 void test2() {
@@ -55,15 +45,9 @@ void test2() {
     vector<item> items = {item1, item2, item3, item5};
     cout<<"Test2. Valor Correcto: 135"<<endl;
 
-
-    backpack bkp1 = bruteforce(15, items);
-    printResult(bkp1, "Bruteforce: ");
-
-    backpack bkp2 = meet_in_the_middle(15, items);
-    printResult(bkp2, "Meet in the middle: ");
-
-    backpack bkp3 = backtracking(15, items);
-    printResult(bkp3, "Backtracking: ");
+    printResult(bruteforce(15, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(backtracking(15, items), "Backtracking: ");
 
     cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
 
@@ -80,21 +64,13 @@ void test3(){
     vector<item> items = {item1, item2, item3, item4, item5};
     cout<<"Test3. Valor Correcto: 29"<<endl;
 
-    backpack bkp1 = bruteforce(25, items);
-    printResult(bkp1, "Bruteforce: ");
-
-    backpack bkp2 = meet_in_the_middle(25, items);
-    printResult(bkp2, "Meet in the middle: ");
-
-    backpack bkp3 = backtracking(25, items);
-    printResult(bkp3, "Backtracking: ");
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet in the middle: ");
+    printResult(backtracking(25, items), "Backtracking: ");
 
     cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
-
-
-
 }
-*/
+
 int main(){
     cout << "steady_clock" << endl;
     cout << chrono::steady_clock::period::num << endl;
@@ -102,8 +78,10 @@ int main(){
     cout << "steady = " << boolalpha << chrono::steady_clock::is_steady << endl << endl;
 
     cout << "experimento;funcion;algoritmo;n;tiempo;" << endl;
-    randomValuesSizesBkp();
-
+    //randomValuesSizesBkp();
+    test1();
+    test2();
+    test3();
 
     return 1;
 }

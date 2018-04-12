@@ -31,7 +31,7 @@ void randomValuesSizesBkp() {
                 items.push_back(item);
             }
 
-            backpack bkp;
+            int bkp;
 
             if (n < 48) {
                 auto start_bruteforce = chrono::steady_clock::now();
