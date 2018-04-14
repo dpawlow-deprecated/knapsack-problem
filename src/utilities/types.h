@@ -15,6 +15,10 @@ struct backpack {
     int load;
     int value;
     vector<item> items;
+
+    bool operator<(const backpack & other) const {
+        return load < other.load;
+    }
 };
 
 #endif //KNAPSACK_PROBLEM_TYPES_H

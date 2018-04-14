@@ -22,3 +22,15 @@ void getCombination(int combination, backpack &bkp, vector<item> const &items) {
     }
 }
 
+bool isLighter(const item& a, const item& b) {
+    return a.size < b.size;
+}
+
+bool isMoreValuable(const item& a, const item& b){
+    return a.value > b.value;
+}
+
+bool isMoreValuableBackpack(const backpack& a, const backpack& b) {
+    return a.value > b.value;
+}
+

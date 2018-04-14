@@ -2,17 +2,10 @@
 #include <vector>
 #include <algorithm>
 #include "utilities/types.h"
+#include "utilities/utilities.h"
 #include "backtracking.h"
 
 using namespace std;
-
-bool isLighter(const item& a, const item& b) {
-    return a.size < b.size;
-}
-
-bool isMoreValuable(const item& a, const item& b){
-    return a.value > b.value;
-}
 
 //Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
 bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {

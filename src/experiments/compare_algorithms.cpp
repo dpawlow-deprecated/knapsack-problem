@@ -33,7 +33,7 @@ void randomValuesSizesBkp() {
 
             int bkp;
 
-            if (n < 48) {
+            if (n < 27) {
                 auto start_bruteforce = chrono::steady_clock::now();
                 bkp = bruteforce(n, items);
                 auto end_bruteforce = chrono::steady_clock::now();
@@ -41,7 +41,9 @@ void randomValuesSizesBkp() {
 
                 cout << "compare_algorithms;randomValuesAndSizes;bruteforce;" << n << ";"
                      << chrono::duration<double, milli>(diff_bruteforce).count() << "ms" << endl;
+            }
 
+            if (n < 47) {
                 auto start_meet_in_the_middle = chrono::steady_clock::now();
                 bkp = meet_in_the_middle(n, items);
                 auto end_meet_in_the_middle = chrono::steady_clock::now();

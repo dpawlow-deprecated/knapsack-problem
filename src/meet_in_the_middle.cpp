@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
+#include <algorithm>
 #include "utilities/types.h"
 #include "utilities/utilities.h"
 
@@ -24,6 +25,40 @@ void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> &back
     }
 }
 
+void filterSecondSet(vector<backpack> &baseSet, vector<backpack> &filteredSet) {
+    sort(baseSet.begin(), baseSet.end(), isMoreValuableBackpack);
+    stable_sort(baseSet.begin(), baseSet.end());
+
+    backpack previousElement;
+    previousElement.load = 0;
+    previousElement.value = 0;
+
+    for (backpack &b : baseSet) {
+        if (previousElement.load < b.load) {
+            filteredSet.push_back(previousElement);
+        } else {
+            previousElement.load = b.load;
+            previousElement.value = max(previousElement.value, b.value);
+        }
+    }
+
+    //Para el último elemento
+    previousElement.load = baseSet[baseSet.size()].load;
+    previousElement.value = max(previousElement.value, baseSet[baseSet.size()].value);
+    filteredSet.push_back(previousElement);
+}
+
+int getMax(int bkpSize, vector<backpack> &firstSet, vector<backpack> &secondSet) {
+    int maxValue = 0;
+    for (backpack &b : firstSet) {
+        auto bkp = std::lower_bound(secondSet.begin(), secondSet.end(), bkpSize - b.load);
+        if (bkp->value > maxValue) {
+            maxValue = bkp->value;
+        }
+    }
+    return maxValue;
+}
+
 int meet_in_the_middle(int bkpSize, vector<item> const &items) {
     vector<item>::const_iterator first = items.begin();
     vector<item>::const_iterator last = items.begin() + items.size()/2;
@@ -35,20 +70,13 @@ int meet_in_the_middle(int bkpSize, vector<item> const &items) {
 
     vector<backpack> firstHalfBackpacks;
     vector<backpack> secondHalfBackpacks;
+
     solvePortion(bkpSize, firstHalf, firstHalfBackpacks);
     solvePortion(bkpSize, secondHalf, secondHalfBackpacks);
 
+    vector<backpack> filteredSecondHalfBackpacks;
+    filterSecondSet(secondHalfBackpacks, filteredSecondHalfBackpacks);
+
     //Busco la combinación de mayor valor
-    backpack maxValueBkp;
-    maxValueBkp.value = 0;
-    maxValueBkp.size = bkpSize;
-    for (backpack &b1 : firstHalfBackpacks) {
-        for (backpack &b2 : secondHalfBackpacks) {
-            if (b1.load + b2.load < bkpSize && b1.value + b2.value > maxValueBkp.value) {
-                maxValueBkp.value = b1.value + b2.value;
-                maxValueBkp.load = b1.load + b2.load;
-            }
-        }
-    }
-    return maxValueBkp.value;
+    return getMax(bkpSize, firstHalfBackpacks, filteredSecondHalfBackpacks);
 }
