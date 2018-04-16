@@ -1,9 +1,4 @@
-steady_clock
-1
-1000000000
-steady = true
-
-experimento;funcion;algoritmo;n;tiempo;
+experimento;funcion;algoritmo;n;t
 compare_algorithms;randomValuesAndSizes;bruteforce;0;0.032959ms
 compare_algorithms;randomValuesAndSizes;meet_in_the_middle;0;0.008151ms
 compare_algorithms;randomValuesAndSizes;backtracking;0;0.010044ms
