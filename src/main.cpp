@@ -64,23 +64,13 @@ void test3(){
     vector<item> items = {item1, item2, item3, item4, item5};
     cout<<"Test3. Valor Correcto: 29"<<endl;
 
-    printResult(bruteforce(25, items), "Bruteforce: ");
-    printResult(meet_in_the_middle(25, items), "Meet in the middle: ");
-    printResult(backtracking(25, items), "Backtracking: ");
-
+    cout << "Bruteforce: " << bruteforce(25, items) << endl;
+    cout << "Meet in the middle: " << meet_in_the_middle(25, items) << endl;
+    cout << "Backtracking: " << backtracking(25, items) << endl;
     cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
 }
 
 int main(){
-    cout << "steady_clock" << endl;
-    cout << chrono::steady_clock::period::num << endl;
-    cout << chrono::steady_clock::period::den << endl;
-    cout << "steady = " << boolalpha << chrono::steady_clock::is_steady << endl << endl;
-
-    cout << "experimento;funcion;algoritmo;n;tiempo;" << endl;
-    //randomValuesSizesBkp();
-    test1();
-    test2();
     test3();
 
     return 1;

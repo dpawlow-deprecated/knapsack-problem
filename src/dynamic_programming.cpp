@@ -21,6 +21,3 @@ int dynamicProgramming(int bkpSize, vector<item> const &items) {
     return cache[bkpSize][items.size()];
 }
 
-int recursiveDynamicProgramming(int bkpSize, vector<item> const &items) {
-
-}
