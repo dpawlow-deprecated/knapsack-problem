@@ -2,9 +2,10 @@
 #define KNAPSACK_PROBLEM_BRUTEFORCE_H
 
 #include <vector>
-#include "utilities/types.h"
+#include "utilities/item.h"
 
-void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> backpacks);
-int bruteforce(int bkpSize, vector<item> const &items);
+using namespace std;
+
+unsigned long bruteforce(unsigned long bkpSize, vector<Item> const &items);
 
 #endif //KNAPSACK_PROBLEM_BRUTEFORCE_H
