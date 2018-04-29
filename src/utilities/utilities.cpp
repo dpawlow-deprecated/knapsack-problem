@@ -1,8 +1,7 @@
 #include <iostream>
 #include <vector>
-#include <cmath>
-#include "types.h"
 #include "backpack.h"
+#include <cmath>
 
 using namespace std;
 

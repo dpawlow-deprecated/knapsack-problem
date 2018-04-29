@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <random>
 
-#include "../utilities/types.h"
 #include "backtracking_sin_poda.h"
 #include "backtracking_poda_factibilidad.h"
 #include "backtracking_poda_optimalidad.h"
@@ -25,15 +24,13 @@ void randomValuesAndSizes() {
         uniform_real_distribution<double> size(1.0, n/2);
         uniform_real_distribution<double> value(1.0, 100.0);
         for (int repeticiones = 0; repeticiones < cantidadRepeticiones; repeticiones++) {
-            vector<item> items;
+            vector<Item> items;
             for (int i = 0; i < n; i++) {
-                item item;
-                item.size = int(size(mt));
-                item.value = int(value(mt));
+                Item item = Item(long(value(mt)), long(size(mt)));
                 items.push_back(item);
             }
             auto start_sin_podas = chrono::steady_clock::now();
-            int bkp = backtrackingSinPoda(n, items);
+            unsigned long bkp = backtrackingSinPoda(n, items);
             auto end_sin_podas = chrono::steady_clock::now();
             auto diff_sin_podas = end_sin_podas - start_sin_podas;
 
@@ -69,6 +66,7 @@ void randomValuesAndSizes() {
     }
 }
 
+/*
 void constantSizesRandomValues() {
     //Se comparan backtracking puro vs poda1 vs poda2, incrementando cantidad de items
     //Todos lso items tienen el mismo tamaño, valores aleatorios
@@ -138,4 +136,4 @@ void checkIfSortingItemsEnhances() {
     //incrementando cantidad de items
     //Valores aleatorios para el tamaño de la mochila y el tamaño y valor de los items
     //∀ w: w ≤ W
-};
+};*/

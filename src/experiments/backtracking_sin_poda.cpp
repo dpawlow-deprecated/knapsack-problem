@@ -1,37 +1,32 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../utilities/types.h"
+#include "../utilities/backpack.h"
 
 using namespace std;
 
-backpack backtrackingSinPodaRecursion(int i, backpack bkp, vector<item> const &items) {
+Backpack backtrackingSinPodaRecursion(int i, Backpack bkp, vector<Item> const &items) {
     if (i >= items.size()) {
         return bkp;
     }
-    backpack backpackWithoutItem = backtrackingSinPodaRecursion(i + 1, bkp, items);
+    Backpack backpackWithoutItem = backtrackingSinPodaRecursion(i + 1, bkp, items);
 
-    if (bkp.load + items[i].size > bkp.size) {
+    if (bkp.getLoad() + items[i].getSize() > bkp.getSize()) {
         return backpackWithoutItem;
     }
 
-    bkp.load += items[i].size;
-    bkp.value += items[i].value;
-    bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtrackingSinPodaRecursion(i + 1, bkp, items);
+    bkp.addItem(items[i]);
+    Backpack backpackWithItem = backtrackingSinPodaRecursion(i + 1, bkp, items);
 
-    if (backpackWithItem.value > backpackWithoutItem.value) {
+    if (backpackWithItem.getValue() > backpackWithoutItem.getValue()) {
         return backpackWithItem;
     } else {
         return backpackWithoutItem;
     }
 }
 
-int backtrackingSinPoda(int bkpSize, vector<item> &items) {
-    backpack bkp;
-    bkp.value = 0;
-    bkp.load = 0;
-    bkp.size = bkpSize;
+unsigned long backtrackingSinPoda(unsigned long bkpSize, vector<Item> &items) {
+    Backpack bkp = Backpack(bkpSize);
 
-    return backtrackingSinPodaRecursion(0, bkp, items).value;
+    return backtrackingSinPodaRecursion(0, bkp, items).getValue();
 };

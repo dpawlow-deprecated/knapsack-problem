@@ -2,9 +2,9 @@
 #define KNAPSACK_PROBLEM_BACKTRACKING_SIN_PODA_H
 
 #include <vector>
-#include "../utilities/types.h"
+#include "../utilities/backpack.h"
 
-backpack backtrackingSinPodaRecursion(int i, backpack bkp, vector<item> const &items);
-int backtrackingSinPoda(int bkpSize, vector<item> &items);
+Backpack backtrackingSinPodaRecursion(int i, Backpack bkp, vector<Item> const &items);
+unsigned long backtrackingSinPoda(unsigned long bkpSize, vector<Item> &items);
 
 #endif //KNAPSACK_PROBLEM_BACKTRACKING_SIN_PODA_H

@@ -41,7 +41,7 @@ bool maxValueIsReachable(int i, const Backpack &bkp, vector<Item> const &items, 
 }
 
 Backpack backtrackingRecursion(int i, Backpack bkp, vector<Item> const &items, unsigned long maxValue) {
-    if (i >= items.size() || !hasRoomForMore(i, bkp, items) || !maxValueIsReachable(i, bkp, items, maxValue)) {
+    if (i >= items.size() || !hasRoomForMore(i, bkp, items) /*|| !maxValueIsReachable(i, bkp, items, maxValue)*/) {
         if (bkp.getValue() > maxValue) {
             maxValue = bkp.getValue();
         }

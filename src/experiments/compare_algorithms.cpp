@@ -4,7 +4,6 @@
 #include <algorithm>
 #include <random>
 
-#include "../utilities/types.h"
 #include "../bruteforce.h"
 #include "../meet_in_the_middle.h"
 #include "../backtracking.h"
@@ -23,15 +22,13 @@ void randomValuesSizesBkp() {
         uniform_real_distribution<double> size(1.0, n/2);
         uniform_real_distribution<double> value(1.0, 100.0);
         for (int repeticiones = 0; repeticiones < cantidadRepeticiones; repeticiones++) {
-            vector<item> items;
+            vector<Item> items;
             for (int i = 0; i < n; i++) {
-                item item;
-                item.size = int(size(mt));
-                item.value = int(value(mt));
+                Item item = Item(long(value(mt)), long(size(mt)));
                 items.push_back(item);
             }
 
-            int bkp;
+            unsigned long bkp;
 
             if (n < 48) {
                 auto start_bruteforce = chrono::steady_clock::now();
@@ -60,7 +57,7 @@ void randomValuesSizesBkp() {
             }
 
             auto start_dynamic_programming = chrono::steady_clock::now();
-            int value = dynamicProgramming(n, items);
+            unsigned long value = dynamicProgramming(n, items);
             auto end_dynamic_programmic = chrono::steady_clock::now();
             auto diff_dynamic_programming = end_dynamic_programmic - start_dynamic_programming;
 

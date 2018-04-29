@@ -1,43 +1,36 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "../utilities/types.h"
 #include "../backtracking.h"
 
 using namespace std;
 
-backpack backtrackingFactibilidadRecursion(int i, backpack bkp, vector<item> const &items) {
+Backpack backtrackingFactibilidadRecursion(int i, Backpack bkp, vector<Item> const &items) {
     if (i >= items.size() || !hasRoomForMore(i, bkp, items)) {
         return bkp;
     }
-    backpack backpackWithoutItem = backtrackingFactibilidadRecursion(i + 1, bkp, items);
+    Backpack backpackWithoutItem = backtrackingFactibilidadRecursion(i + 1, bkp, items);
 
-    if (bkp.load + items[i].size > bkp.size) {
+    if (bkp.getLoad() + items[i].getSize() > bkp.getSize()) {
         return backpackWithoutItem;
     }
 
-    bkp.load += items[i].size;
-    bkp.value += items[i].value;
-    bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtrackingFactibilidadRecursion(i + 1, bkp, items);
+    bkp.addItem(items[i]);
+    Backpack backpackWithItem = backtrackingFactibilidadRecursion(i + 1, bkp, items);
 
-    if (backpackWithItem.value > backpackWithoutItem.value) {
+    if (backpackWithItem.getValue() > backpackWithoutItem.getValue()) {
         return backpackWithItem;
     } else {
         return backpackWithoutItem;
     }
 }
 
-int backtrackingPodaFactibilidad(int bkpSize, vector<item> &items) {
-    backpack bkp;
-    bkp.value = 0;
-    bkp.load = 0;
-    bkp.size = bkpSize;
+unsigned long backtrackingPodaFactibilidad(unsigned long bkpSize, vector<Item> &items) {
+    Backpack bkp = Backpack(bkpSize);
 
     //Se ordena primero por valor decreciente y luego con un algoritmo estable por tamaño creciente
     //El ordenamiento se usa en las podas
-    sort(items.begin(), items.end(), isMoreValuable);
-    stable_sort(items.begin(), items.end(), isLighter);
+    sort(items.begin(), items.end(), isMoreEfficient);
 
-    return backtrackingFactibilidadRecursion(0, bkp, items).value;
+    return backtrackingFactibilidadRecursion(0, bkp, items).getLoad();
 };
