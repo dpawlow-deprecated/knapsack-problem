@@ -15,9 +15,15 @@ public:
 
     void addItem(Item const &item);
 
+    void setSize(unsigned long size);
+    void setValue(unsigned long value);
+    void setLoad(unsigned long load);
+
     unsigned long getSize() const;
     unsigned long getValue() const;
     unsigned long getLoad() const;
+
+    bool operator<(const Backpack& bkp) const;
 
 private:
     unsigned long size;

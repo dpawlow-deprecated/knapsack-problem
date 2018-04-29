@@ -20,6 +20,18 @@ void Backpack::addItem(Item const &item) {
     value += item.getValue();
 }
 
+void Backpack::setSize(unsigned long size) {
+    Backpack::size = size;
+}
+
+void Backpack::setValue(unsigned long value) {
+    Backpack::value = value;
+}
+
+void Backpack::setLoad(unsigned long load) {
+    Backpack::load = load;
+}
+
 unsigned long Backpack::getSize() const {
     return size;
 }
@@ -30,4 +42,8 @@ unsigned long Backpack::getValue() const {
 
 unsigned long Backpack::getLoad() const {
     return load;
+}
+
+bool Backpack::operator<(const Backpack& bkp) const {
+    return load < bkp.getLoad();
 }
