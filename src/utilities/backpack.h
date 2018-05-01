@@ -22,8 +22,10 @@ public:
     unsigned long getSize() const;
     unsigned long getValue() const;
     unsigned long getLoad() const;
+    unsigned long getFreeSpace() const;
 
     bool operator<(const Backpack& bkp) const;
+    bool operator>(const Backpack& bkp) const;
 
 private:
     unsigned long size;

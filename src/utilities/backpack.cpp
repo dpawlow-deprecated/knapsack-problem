@@ -44,6 +44,14 @@ unsigned long Backpack::getLoad() const {
     return load;
 }
 
+unsigned long Backpack::getFreeSpace() const {
+    return size - load;
+}
+
 bool Backpack::operator<(const Backpack& bkp) const {
     return load < bkp.getLoad();
+}
+
+bool Backpack::operator>(const Backpack& bkp) const {
+    return load > bkp.getLoad();
 }

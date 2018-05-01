@@ -30,22 +30,22 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
     vector<Backpack> filteredSet;
     sort(baseSet.begin(), baseSet.end());
 
-    Backpack previousElement = Backpack();
+    Backpack previousElement = Backpack(baseSet[0]);
 
     for (Backpack &b : baseSet) {
         if (previousElement.getLoad() < b.getLoad()) {
             filteredSet.push_back(previousElement);
         }
-
         previousElement.setLoad(b.getLoad());
         previousElement.setValue(max(previousElement.getValue(), b.getValue()));
-
     }
 
     //Para el último elemento
-    previousElement.setLoad(baseSet[baseSet.size()].getLoad());
-    previousElement.setValue(max(previousElement.getValue(), baseSet[baseSet.size()].getValue()));
-    filteredSet.push_back(previousElement);
+    if (filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
+        filteredSet.push_back(previousElement);
+    } else if (filteredSet[filteredSet.size()-1].getValue() < previousElement.getValue()) {
+        filteredSet[filteredSet.size()-1].setValue(previousElement.getValue());
+    }
     return filteredSet;
 }
 
@@ -53,10 +53,16 @@ unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<B
     unsigned long maxValue = 0;
     for (Backpack &b : firstSet) {
         Backpack bla = Backpack(bkpSize);
-        bla.setLoad(bkpSize - b.getLoad());
-        auto bkp = std::lower_bound(secondSet.begin(), secondSet.end(), bla);
-        if (bkp->getValue() > maxValue) {
-            maxValue = bkp->getValue();
+        bla.setLoad(b.getFreeSpace());
+        auto iterator = upper_bound(secondSet.begin(), secondSet.end(), bla);
+        if (iterator != secondSet.begin()) {
+            iterator--;
+            if (b.getLoad() + iterator->getLoad() <= bkpSize) {
+                maxValue = max(maxValue, b.getValue() + iterator->getValue());
+            }
+        } else {
+            iterator = secondSet.end();
+            maxValue = max(maxValue, max(b.getValue(), iterator->getValue()));
         }
     }
     return maxValue;
@@ -78,8 +84,9 @@ unsigned long meet_in_the_middle(unsigned long bkpSize, vector<Item> const &item
     solvePortion(bkpSize, firstHalf, firstHalfBackpacks);
     solvePortion(bkpSize, secondHalf, secondHalfBackpacks);
 
+    vector<Backpack> filteredFirstHalfBackpacks = filterSet(firstHalfBackpacks);
     vector<Backpack> filteredSecondHalfBackpacks = filterSet(secondHalfBackpacks);
 
     //Busco la combinación de mayor valor
-    return getMax(bkpSize, firstHalfBackpacks, filteredSecondHalfBackpacks);
+    return getMax(bkpSize, filteredFirstHalfBackpacks, filteredSecondHalfBackpacks);
 }

@@ -26,8 +26,18 @@ bool hasRoomForMore(int i, const Backpack &bkp, vector<Item> const &items) {
     return smallestItem.getSize() <= bkp.getSize() - bkp.getLoad();
 }
 
-int solveFractionalKnapsackProblem(int i, const Backpack &bkp, vector<Item> const &items) {
-
+void solveFractionalKnapsackProblem(int i, Backpack &bkp, vector<Item> const &items) {
+    //Precondición: el vector  debe estar ordenado decrecientemente por valor/peso
+    for (int j = i; j < items.size(); j++) {
+        if (items[j].getSize() <= bkp.getFreeSpace()) {
+            bkp.addItem(items[j]);
+        } else {
+            unsigned long fitableValue = ((items[j].getValue() / items[j].getSize()) * bkp.getFreeSpace());
+            bkp.setValue(bkp.getValue() + fitableValue);
+            bkp.setLoad(bkp.getSize());
+            return;
+        }
+    }
 }
 
 //Poda de optimalidad: si la suma del valor actual y de la suma del valor de los items que entran en la mochila
@@ -36,12 +46,12 @@ bool maxValueIsReachable(int i, const Backpack &bkp, vector<Item> const &items, 
     //Precondición: el vector debe estar ordenado decrecientemente por valor/peso
     Backpack subBackpack = Backpack(bkp.getSize() - bkp.getLoad());
 
-    int maxPossibleRemainingValue = solveFractionalKnapsackProblem(i, bkp, items);
-    return bkp.getValue() + maxPossibleRemainingValue > maxValue;
+    solveFractionalKnapsackProblem(i, subBackpack, items);
+    return bkp.getValue() + subBackpack.getValue() > maxValue;
 }
 
-Backpack backtrackingRecursion(int i, Backpack bkp, vector<Item> const &items, unsigned long maxValue) {
-    if (i >= items.size() || !hasRoomForMore(i, bkp, items) /*|| !maxValueIsReachable(i, bkp, items, maxValue)*/) {
+Backpack backtrackingRecursion(int i, Backpack bkp, vector<Item> const &items, unsigned long &maxValue) {
+    if (i >= items.size() || !hasRoomForMore(i, bkp, items) || !maxValueIsReachable(i, bkp, items, maxValue)) {
         if (bkp.getValue() > maxValue) {
             maxValue = bkp.getValue();
         }
@@ -70,5 +80,7 @@ unsigned long backtracking(unsigned long bkpSize, vector<Item> &items) {
     //Se ordena decrecientemente por coeficiente valor/peso
     sort(items.begin(), items.end(), isMoreEfficient);
 
-    return backtrackingRecursion(0, bkp, items, 0).getValue();
+    unsigned long maxValue = 0;
+
+    return backtrackingRecursion(0, bkp, items, maxValue).getValue();
 };
