@@ -26,6 +26,8 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
     vector<Backpack> filteredSet;
     sort(baseSet.begin(), baseSet.end());
 
+    //Se agrega la mochila vacía para los casos en el que la mejor solución no es una combinación.
+    filteredSet.emplace_back(Backpack(0, 0, 0));
     Backpack previousElement = Backpack(baseSet[0]);
 
     for (Backpack &b : baseSet) {
@@ -37,7 +39,7 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
     }
 
     //Para el último elemento
-    if (filteredSet.size() == 0 || filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
+    if (filteredSet.empty() || filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
         filteredSet.push_back(previousElement);
     } else if (filteredSet[filteredSet.size()-1].getValue() < previousElement.getValue()) {
         filteredSet[filteredSet.size()-1].setValue(previousElement.getValue());
@@ -48,12 +50,7 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
 unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<Backpack> &secondSet) {
     unsigned long maxValue = 0;
 
-    for (Backpack &b : secondSet) {
-        maxValue = max(maxValue, b.getValue());
-    }
-
     for (Backpack &b : firstSet) {
-        maxValue = max(maxValue, b.getValue());
         auto iterator = upper_bound(secondSet.begin(), secondSet.end(), Backpack(bkpSize, b.getFreeSpace(), 0));
         if (iterator != secondSet.begin()) {
             iterator--;
