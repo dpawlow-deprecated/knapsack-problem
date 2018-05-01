@@ -7,7 +7,7 @@
 
 void printResult(unsigned long value, string text) {
     cout<<text;
-    cout<<"Value: "<<value<<", ";
+    cout<< "\t" << value <<", ";
     cout<<endl;
 }
 
@@ -25,10 +25,10 @@ void test1() {
     cout<<"Test1. Valor Correcto: 135"<<endl;
 
     printResult(bruteforce(15, items), "Bruteforce: ");
-    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
-
-    cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
+    printResult(dynamicProgramming(15, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test2() {
@@ -42,11 +42,10 @@ void test2() {
     cout<<"Test2. Valor Correcto: 135"<<endl;
 
     printResult(bruteforce(15, items), "Bruteforce: ");
-    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
-
-    cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
-
+    printResult(dynamicProgramming(15, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test3(){
@@ -55,15 +54,15 @@ void test3(){
     Item item3 = Item(13, 5);
     Item item4 = Item(8, 10);
     Item item5 = Item(8, 5);
-    Item item6 = Item(5, 25);
 
     vector<Item> items = {item1, item2, item3, item4, item5};
     cout<<"Test3. Valor Correcto: 29"<<endl;
 
-    cout << "Bruteforce: " << bruteforce(25, items) << endl;
-    cout << "Meet in the middle: " << meet_in_the_middle(25, items) << endl;
-    cout << "Backtracking: " << backtracking(25, items) << endl;
-    cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test4(){
@@ -75,12 +74,13 @@ void test4(){
     Item item6 = Item(5, 25);
 
     vector<Item> items = {item1, item2, item3, item4, item5, item6};
-    cout<<"Test3. Valor Correcto: 29"<<endl;
+    cout<<"Test4. Valor Correcto: 29"<<endl;
 
-    cout << "Bruteforce: " << bruteforce(25, items) << endl;
-    cout << "Meet in the middle: " << meet_in_the_middle(25, items) << endl;
-    cout << "Backtracking: " << backtracking(25, items) << endl;
-    cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test5(){
@@ -89,12 +89,13 @@ void test5(){
     Item item5 = Item(8, 5);
 
     vector<Item> items = {item3, item4, item5};
-    cout<<"Test3. Valor Correcto: 29"<<endl;
+    cout<<"Test5. Valor Correcto: 29"<<endl;
 
-    cout << "Bruteforce: " << bruteforce(25, items) << endl;
-    cout << "Meet in the middle: " << meet_in_the_middle(25, items) << endl;
-    cout << "Backtracking: " << backtracking(25, items) << endl;
-    cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
 }
 
 

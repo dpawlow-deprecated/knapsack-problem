@@ -14,6 +14,12 @@ Backpack::Backpack(unsigned long size) {
     load = 0;
 }
 
+Backpack::Backpack(unsigned long size, unsigned long load, unsigned long value) {
+    Backpack::size = size;
+    Backpack::load = load;
+    Backpack:: value = value;
+}
+
 void Backpack::addItem(Item const &item) {
     Backpack::items.push_back(item);
     load += item.getSize();

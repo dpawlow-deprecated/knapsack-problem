@@ -11,10 +11,6 @@ bool isMoreEfficient(const Item& a, const Item& b) {
     return a.getValue() / a.getSize() > b.getValue() / b.getSize();
 }
 
-bool isMoreValuable(const Item& a, const Item& b){
-    return a.getValue() > b.getValue();
-}
-
 //Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
 bool hasRoomForMore(int i, const Backpack &bkp, vector<Item> const &items) {
     Item smallestItem = items[i];

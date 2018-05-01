@@ -12,6 +12,7 @@ public:
 
     Backpack();
     explicit Backpack(unsigned long size);
+    explicit Backpack(unsigned long size, unsigned long load, unsigned long value);
 
     void addItem(Item const &item);
 

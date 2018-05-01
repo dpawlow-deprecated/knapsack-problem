@@ -6,10 +6,6 @@
 
 using namespace std;
 
-bool isMoreValuableBackpack(const Backpack& a, const Backpack& b) {
-    return a.getValue() < b.getValue();
-}
-
 void solvePortion(unsigned long bkpSize, vector<Item> const &items, vector<Backpack> &backpacks) {
     auto nOfCombinations = u_int(pow(2, items.size()));
 
@@ -41,7 +37,7 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
     }
 
     //Para el último elemento
-    if (filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
+    if (filteredSet.size() == 0 || filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
         filteredSet.push_back(previousElement);
     } else if (filteredSet[filteredSet.size()-1].getValue() < previousElement.getValue()) {
         filteredSet[filteredSet.size()-1].setValue(previousElement.getValue());
@@ -51,18 +47,19 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
 
 unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<Backpack> &secondSet) {
     unsigned long maxValue = 0;
+
+    for (Backpack &b : secondSet) {
+        maxValue = max(maxValue, b.getValue());
+    }
+
     for (Backpack &b : firstSet) {
-        Backpack bla = Backpack(bkpSize);
-        bla.setLoad(b.getFreeSpace());
-        auto iterator = upper_bound(secondSet.begin(), secondSet.end(), bla);
+        maxValue = max(maxValue, b.getValue());
+        auto iterator = upper_bound(secondSet.begin(), secondSet.end(), Backpack(bkpSize, b.getFreeSpace(), 0));
         if (iterator != secondSet.begin()) {
             iterator--;
             if (b.getLoad() + iterator->getLoad() <= bkpSize) {
                 maxValue = max(maxValue, b.getValue() + iterator->getValue());
             }
-        } else {
-            iterator = secondSet.end();
-            maxValue = max(maxValue, max(b.getValue(), iterator->getValue()));
         }
     }
     return maxValue;
@@ -70,6 +67,13 @@ unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<B
 
 
 unsigned long meet_in_the_middle(unsigned long bkpSize, vector<Item> const &items) {
+    /*
+     * Meet in the middle divide el dominio del problema (el vector items) en dos, combinando más tarde las
+     * subsoluciones para encontrar la solución global.
+     * Primero usa una fuerza bruta modificada para cada mitad del vector items.
+     * Luego evalúa los vectores resultantes para encontrar la mejor combinación de subsoluciones.
+     */
+
     vector<Item>::const_iterator first = items.begin();
     vector<Item>::const_iterator last = items.begin() + items.size()/2;
     vector<Item> firstHalf(first, last);
