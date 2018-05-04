@@ -11,7 +11,7 @@
 #include "config.h"
 
 void randomValuesSizesBkp() {
-    //Se comparan backtracking puro vs poda1 vs poda2, incrementando cantidad de items
+    //Se comparan bruteforce vs meet in the middle vs backtracking vs dinámica
     //Valores aleatorios para el tamaño de la mochila y el tamaño y valor de los items
     //∀ w: w ≤ W
 
@@ -24,7 +24,7 @@ void randomValuesSizesBkp() {
         for (int repeticiones = 0; repeticiones < cantidadRepeticiones; repeticiones++) {
             vector<Item> items;
             for (int i = 0; i < n; i++) {
-                Item item = Item(long(value(mt)), long(size(mt)));
+                Item item = Item((unsigned long) value(mt), (unsigned long) size(mt));
                 items.push_back(item);
             }
 

@@ -4,6 +4,9 @@
 #include "bruteforce.h"
 #include "meet_in_the_middle.h"
 #include "dynamic_programming.h"
+#include "experiments/backtracking_poda_optimalidad.h"
+#include "experiments/backtracking_poda_factibilidad.h"
+#include "experiments/backtracking_sin_poda.h"
 
 void printResult(unsigned long value, string text) {
     cout<<text;
@@ -27,6 +30,9 @@ void test1() {
     printResult(bruteforce(15, items), "Bruteforce: ");
     printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(15, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(15, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(15, items), "Backtracking optimalidad: ");
     printResult(dynamicProgramming(15, items), "Dinámica: ");
     cout<<endl;
 }
@@ -44,6 +50,9 @@ void test2() {
     printResult(bruteforce(15, items), "Bruteforce: ");
     printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(15, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(15, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(15, items), "Backtracking optimalidad: ");
     printResult(dynamicProgramming(15, items), "Dinámica: ");
     cout<<endl;
 }
@@ -61,6 +70,9 @@ void test3(){
     printResult(bruteforce(25, items), "Bruteforce: ");
     printResult(meet_in_the_middle(25, items), "Meet: ");
     printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
     printResult(dynamicProgramming(25, items), "Dinámica: ");
     cout<<endl;
 }
@@ -79,6 +91,9 @@ void test4(){
     printResult(bruteforce(25, items), "Bruteforce: ");
     printResult(meet_in_the_middle(25, items), "Meet: ");
     printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
     printResult(dynamicProgramming(25, items), "Dinámica: ");
     cout<<endl;
 }
@@ -94,6 +109,9 @@ void test5(){
     printResult(bruteforce(25, items), "Bruteforce: ");
     printResult(meet_in_the_middle(25, items), "Meet: ");
     printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
     printResult(dynamicProgramming(25, items), "Dinámica: ");
     cout<<endl;
 }

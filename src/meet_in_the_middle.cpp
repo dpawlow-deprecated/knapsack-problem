@@ -23,6 +23,13 @@ void solvePortion(unsigned long bkpSize, vector<Item> const &items, vector<Backp
 }
 
 vector<Backpack> filterSet(vector<Backpack> &baseSet) {
+    /*
+     * Se toma el conjunto dado y se lo ordena.
+     * Luego se lo recorre, guardando una mochila por carga, con el mayor valor posible para esa carga.
+     * Si el valor de un elemento más liviano, se le asigna también ese valor al elemento más pesado, para facilitar la
+     * combinación de subsoluciones (dado que sólo interesa el valor máximo).
+     */
+
     vector<Backpack> filteredSet;
     sort(baseSet.begin(), baseSet.end());
 
@@ -48,6 +55,11 @@ vector<Backpack> filterSet(vector<Backpack> &baseSet) {
 }
 
 unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<Backpack> &secondSet) {
+    /*
+     * Dados dos conjuntos filtrados de elementos, recorre el primero buscando el complementario en el segundo por
+     * búsqueda binaria.
+     */
+
     unsigned long maxValue = 0;
 
     for (Backpack &b : firstSet) {

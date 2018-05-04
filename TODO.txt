@@ -1,8 +1,8 @@
-// Meet in the middle:
-No puedo hacer el bucket sort porque no tengo garantías sobre los pesos.
-
-// Backtracking: 
-Poda por optimalidad: es mejor resolver el problema de la mochila fraccionario porque su solución incluye a la del no fraccionario (es mayor o igual) y es una predicción mejor que la poda que tengo ahora.
-
 //Backtracking:
 Parte del experimento puede ser chequear si haber ordenado los items por peso mejora la performance.
+
+//Experimentos:
+- Mochila tamaño constante, n creciente.
+- n constante, tamaño de mochila creciente.
+- n y w creciendo a la par.
+- Mochila tan grande que haga que dinámica sea más lenta que el resto

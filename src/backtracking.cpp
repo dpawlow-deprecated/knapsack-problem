@@ -2,8 +2,6 @@
 #include <vector>
 #include <algorithm>
 #include "backtracking.h"
-#include "utilities/item.h"
-#include "utilities/backpack.h"
 
 using namespace std;
 
@@ -19,7 +17,7 @@ bool hasRoomForMore(int i, const Backpack &bkp, vector<Item> const &items) {
             smallestItem = items[j];
         }
     }
-    return smallestItem.getSize() <= bkp.getSize() - bkp.getLoad();
+    return smallestItem.getSize() <= bkp.getFreeSpace();
 }
 
 void solveFractionalKnapsackProblem(int i, Backpack &bkp, vector<Item> const &items) {
@@ -58,9 +56,7 @@ Backpack backtrackingRecursion(int i, Backpack bkp, vector<Item> const &items, u
     if (bkp.getLoad() + items[i].getSize() > bkp.getSize()) {
         return backpackWithoutItem;
     }
-
     bkp.addItem(items[i]);
-
     Backpack backpackWithItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
 
     if (backpackWithItem.getValue() > backpackWithoutItem.getValue()) {
