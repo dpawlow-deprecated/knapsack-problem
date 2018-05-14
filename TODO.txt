@@ -1,8 +1,0 @@
-//Backtracking:
-Parte del experimento puede ser chequear si haber ordenado los items por peso mejora la performance.
-
-//Experimentos:
-- Mochila tamaño constante, n creciente.
-- n constante, tamaño de mochila creciente.
-- n y w creciendo a la par.
-- Mochila tan grande que haga que dinámica sea más lenta que el resto

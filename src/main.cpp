@@ -7,6 +7,8 @@
 #include "experiments/backtracking_poda_optimalidad.h"
 #include "experiments/backtracking_poda_factibilidad.h"
 #include "experiments/backtracking_sin_poda.h"
+#include "experiments/compare_algorithms.h"
+#include "experiments/compare_backtracking.h"
 
 void printResult(unsigned long value, string text) {
     cout<<text;
@@ -118,11 +120,24 @@ void test5(){
 
 
 int main(){
-    test1();
-    test2();
-    test3();
-    test4();
-    test5();
+    unsigned long n;
+    unsigned long bkpSize;
+    vector<Item> items;
 
-    return 1;
+    cin >> n;
+    cin >> bkpSize;
+
+    for (int i = 0; i < n; i++) {
+        unsigned long weight;
+        unsigned long value;
+        cin >> weight;
+        cin >> value;
+        items.emplace_back(Item(value, weight));
+    }
+
+    cout << "Fuerza bruta: " << bruteforce(bkpSize, items) << endl;
+    cout << "MitM: " << meet_in_the_middle(bkpSize, items) << endl;
+    cout << "Backtracking: " << backtracking(bkpSize, items) << endl;
+    cout << "DP: " << dynamicProgramming(bkpSize, items) << endl;
+
 }

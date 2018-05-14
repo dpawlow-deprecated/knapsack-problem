@@ -1,8 +1,4 @@
-Por razones de último momento (y porque me olvidé de esa parte), el tp no lee entradas del standard input.
-Asumo, por este error (y probablemente por otros), que está automáticamente desaprobado y va a la reentrega.
-
-Aún así, agradecería si pudiesen revisar el tp así puedo tener sus observaciones. Gracias :)
-
+El trabajo práctico toma entradas del standard input y las resuelve para todos los algoritmos pedidos.
 
 Compilar:
 ./make.sh
