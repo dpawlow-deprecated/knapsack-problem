@@ -3,6 +3,6 @@
 
 #include "utilities/types.h"
 
-int dynamicProgramming(int bkpSize, vector<item> const &items);
+unsigned long dynamicProgramming(unsigned long bkpSize, vector<Item> const &items);
 
 #endif //KNAPSACK_PROBLEM_DYNAMIC_PROGRAMMING_H

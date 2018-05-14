@@ -2,9 +2,10 @@
 #define KNAPSACK_PROBLEM_CONFIGS_H
 
 /* compare_backtracking */
-enum compare_backtracking {
-    cantidadMaximaDeItems = 1000,
-    cantidadRepeticiones = 50,
+
+enum experiments_config {
+    max_n_exponentials = 48,
+    number_of_repetitions = 50,
 };
 
 

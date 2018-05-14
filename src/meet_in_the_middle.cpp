@@ -1,54 +1,105 @@
 #include <iostream>
 #include <vector>
 #include <cmath>
-#include "utilities/types.h"
+#include <algorithm>
 #include "utilities/utilities.h"
 
 using namespace std;
 
-void solvePortion(int bkpSize, vector<item> const &items, vector<backpack> &backpacks) {
+void solvePortion(unsigned long bkpSize, vector<Item> const &items, vector<Backpack> &backpacks) {
     auto nOfCombinations = u_int(pow(2, items.size()));
 
     //El valor en binario de combination equivale al array de bools de items que están en la mochila
     for (int i = 1; i < nOfCombinations; i++) {
-        backpack bkp;
-        bkp.value = 0;
-        bkp.load = 0;
+        Backpack bkp = Backpack(bkpSize);
 
         int combination = i;
         getCombination(combination, bkp, items);
 
-        if (bkp.load <= bkpSize) {
+        if (bkp.getLoad() <= bkpSize) {
             backpacks.push_back(bkp);
         }
     }
 }
 
-int meet_in_the_middle(int bkpSize, vector<item> const &items) {
-    vector<item>::const_iterator first = items.begin();
-    vector<item>::const_iterator last = items.begin() + items.size()/2;
-    vector<item> firstHalf(first, last);
+vector<Backpack> filterSet(vector<Backpack> &baseSet) {
+    /*
+     * Se toma el conjunto dado y se lo ordena.
+     * Luego se lo recorre, guardando una mochila por carga, con el mayor valor posible para esa carga.
+     * Si el valor de un elemento más liviano, se le asigna también ese valor al elemento más pesado, para facilitar la
+     * combinación de subsoluciones (dado que sólo interesa el valor máximo).
+     */
 
-    first = items.begin() + (items.size()/2);
-    last = items.begin() + items.size();
-    vector<item> secondHalf(first, last);
+    vector<Backpack> filteredSet;
+    sort(baseSet.begin(), baseSet.end());
 
-    vector<backpack> firstHalfBackpacks;
-    vector<backpack> secondHalfBackpacks;
-    solvePortion(bkpSize, firstHalf, firstHalfBackpacks);
-    solvePortion(bkpSize, secondHalf, secondHalfBackpacks);
+    //Se agrega la mochila vacía para los casos en el que la mejor solución no es una combinación.
+    filteredSet.emplace_back(Backpack(0, 0, 0));
+    Backpack previousElement = Backpack(baseSet[0]);
 
-    //Busco la combinación de mayor valor
-    backpack maxValueBkp;
-    maxValueBkp.value = 0;
-    maxValueBkp.size = bkpSize;
-    for (backpack &b1 : firstHalfBackpacks) {
-        for (backpack &b2 : secondHalfBackpacks) {
-            if (b1.load + b2.load < bkpSize && b1.value + b2.value > maxValueBkp.value) {
-                maxValueBkp.value = b1.value + b2.value;
-                maxValueBkp.load = b1.load + b2.load;
+    for (Backpack &b : baseSet) {
+        if (previousElement.getLoad() < b.getLoad()) {
+            filteredSet.push_back(previousElement);
+        }
+        previousElement.setLoad(b.getLoad());
+        previousElement.setValue(max(previousElement.getValue(), b.getValue()));
+    }
+
+    //Para el último elemento
+    if (filteredSet.empty() || filteredSet[filteredSet.size()-1].getLoad() < previousElement.getLoad()) {
+        filteredSet.push_back(previousElement);
+    } else if (filteredSet[filteredSet.size()-1].getValue() < previousElement.getValue()) {
+        filteredSet[filteredSet.size()-1].setValue(previousElement.getValue());
+    }
+    return filteredSet;
+}
+
+unsigned long getMax(unsigned long bkpSize, vector<Backpack> &firstSet, vector<Backpack> &secondSet) {
+    /*
+     * Dados dos conjuntos filtrados de elementos, recorre el primero buscando el complementario en el segundo por
+     * búsqueda binaria.
+     */
+
+    unsigned long maxValue = 0;
+
+    for (Backpack &b : firstSet) {
+        auto iterator = upper_bound(secondSet.begin(), secondSet.end(), Backpack(bkpSize, b.getFreeSpace(), 0));
+        if (iterator != secondSet.begin()) {
+            iterator--;
+            if (b.getLoad() + iterator->getLoad() <= bkpSize) {
+                maxValue = max(maxValue, b.getValue() + iterator->getValue());
             }
         }
     }
-    return maxValueBkp.value;
+    return maxValue;
+}
+
+
+unsigned long meet_in_the_middle(unsigned long bkpSize, vector<Item> const &items) {
+    /*
+     * Meet in the middle divide el dominio del problema (el vector items) en dos, combinando más tarde las
+     * subsoluciones para encontrar la solución global.
+     * Primero usa una fuerza bruta modificada para cada mitad del vector items.
+     * Luego evalúa los vectores resultantes para encontrar la mejor combinación de subsoluciones.
+     */
+
+    vector<Item>::const_iterator first = items.begin();
+    vector<Item>::const_iterator last = items.begin() + items.size()/2;
+    vector<Item> firstHalf(first, last);
+
+    first = items.begin() + (items.size()/2);
+    last = items.begin() + items.size();
+    vector<Item> secondHalf(first, last);
+
+    vector<Backpack> firstHalfBackpacks;
+    vector<Backpack> secondHalfBackpacks;
+
+    solvePortion(bkpSize, firstHalf, firstHalfBackpacks);
+    solvePortion(bkpSize, secondHalf, secondHalfBackpacks);
+
+    vector<Backpack> filteredFirstHalfBackpacks = filterSet(firstHalfBackpacks);
+    vector<Backpack> filteredSecondHalfBackpacks = filterSet(secondHalfBackpacks);
+
+    //Busco la combinación de mayor valor
+    return getMax(bkpSize, filteredFirstHalfBackpacks, filteredSecondHalfBackpacks);
 }

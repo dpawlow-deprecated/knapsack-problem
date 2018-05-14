@@ -6,41 +6,36 @@
 
 using namespace std;
 
-backpack backtrackingOptimalidadRecursion(int i, backpack bkp, vector<item> const &items, int maxValue) {
+Backpack backtrackingOptimalidadRecursion(int i, Backpack bkp, vector<Item> const &items, unsigned long &maxValue) {
     if (i >= items.size() || !maxValueIsReachable(i, bkp, items, maxValue)) {
-        if (bkp.value > maxValue) {
-            maxValue = bkp.value;
+        if (bkp.getValue() > maxValue) {
+            maxValue = bkp.getValue();
         }
         return bkp;
     }
-    backpack backpackWithoutItem = backtrackingOptimalidadRecursion(i + 1, bkp, items, maxValue);
+    Backpack backpackWithoutItem = backtrackingOptimalidadRecursion(i + 1, bkp, items, maxValue);
 
-    if (bkp.load + items[i].size > bkp.size) {
+    if (bkp.getLoad() + items[i].getSize() > bkp.getSize()) {
         return backpackWithoutItem;
     }
 
-    bkp.load += items[i].size;
-    bkp.value += items[i].value;
-    bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtrackingOptimalidadRecursion(i + 1, bkp, items, maxValue);
+    bkp.addItem(items[i]);
 
-    if (backpackWithItem.value > backpackWithoutItem.value) {
+    Backpack backpackWithItem = backtrackingOptimalidadRecursion(i + 1, bkp, items, maxValue);
+
+    if (backpackWithItem.getValue() > backpackWithoutItem.getValue()) {
         return backpackWithItem;
     } else {
         return backpackWithoutItem;
     }
 }
 
-int backtrackingPodaOptimalidad(int bkpSize, vector<item> &items) {
-    backpack bkp;
-    bkp.value = 0;
-    bkp.load = 0;
-    bkp.size = bkpSize;
+unsigned long backtrackingPodaOptimalidad(unsigned long bkpSize, vector<Item> &items) {
+    Backpack bkp = Backpack(bkpSize);
 
-    //Se ordena primero por valor decreciente y luego con un algoritmo estable por tamaño creciente
-    //El ordenamiento se usa en las podas
-    sort(items.begin(), items.end(), isMoreValuable);
-    stable_sort(items.begin(), items.end(), isLighter);
+    //Se ordena decrecientemente por coeficiente valor/peso
+    sort(items.begin(), items.end(), isMoreEfficient);
+    unsigned long maxValue = 0;
 
-    return backtrackingOptimalidadRecursion(0, bkp, items, 0).value;
+    return backtrackingOptimalidadRecursion(0, bkp, items, maxValue).getValue();
 };

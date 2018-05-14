@@ -4,74 +4,140 @@
 #include "bruteforce.h"
 #include "meet_in_the_middle.h"
 #include "dynamic_programming.h"
-
-#include "experiments/compare_backtracking.h"
+#include "experiments/backtracking_poda_optimalidad.h"
+#include "experiments/backtracking_poda_factibilidad.h"
+#include "experiments/backtracking_sin_poda.h"
 #include "experiments/compare_algorithms.h"
+#include "experiments/compare_backtracking.h"
 
-void printResult(int value, string text) {
+void printResult(unsigned long value, string text) {
     cout<<text;
-    cout<<"Value: "<<value<<", ";
+    cout<< "\t" << value <<", ";
     cout<<endl;
 }
 
 void test1() {
-    item item1; item item2; item item3; item item4; item item5; item itemA; item itemB; item item6;
-    itemA.size = 15; itemA.value = 2;
-    itemB.size = 15; itemB.value = 3;
-    item1.size = 3; item1.value = 10;
-    item2.size = 4; item2.value = 10;
-    item3.size = 1; item3.value = 100;
-    item4.size = 10; item4.value = 20;
-    item5.size = 5; item5.value = 15;
-    item6.size = 5; item6.value = 1;
+    Item item1 = Item(10, 3);
+    Item item2 = Item(10, 4);
+    Item item3 = Item(100, 1);
+    Item item4 = Item(20, 10);
+    Item item5 = Item(15, 5);
+    Item item6 = Item(1, 5);
+    Item itemA = Item(2, 15);
+    Item itemB = Item(3, 15);
 
-    vector<item> items = {itemA, item1, item2, item3, item4, item5, item6, itemB};
+    vector<Item> items = {itemA, item1, item2, item3, item4, item5, item6, itemB};
     cout<<"Test1. Valor Correcto: 135"<<endl;
 
     printResult(bruteforce(15, items), "Bruteforce: ");
-    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
-
-    cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
+    printResult(backtrackingSinPoda(15, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(15, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(15, items), "Backtracking optimalidad: ");
+    printResult(dynamicProgramming(15, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test2() {
-    item item1; item item2; item item3; item item5;
-    item1.size = 3; item1.value = 10;
-    item2.size = 4; item2.value = 10;
-    item3.size = 1; item3.value = 100;
-    item5.size = 5; item5.value = 15;
+    Item item1 = Item(10, 3);
+    Item item2 = Item(10, 4);
+    Item item3 = Item(100, 1);
+    Item item4 = Item(20, 10);
+    Item item5 = Item(15, 5);
 
-    vector<item> items = {item1, item2, item3, item5};
+    vector<Item> items = {item1, item2, item3, item4, item5};
     cout<<"Test2. Valor Correcto: 135"<<endl;
 
     printResult(bruteforce(15, items), "Bruteforce: ");
-    printResult(meet_in_the_middle(15, items), "Meet in the middle: ");
+    printResult(meet_in_the_middle(15, items), "Meet: ");
     printResult(backtracking(15, items), "Backtracking: ");
-
-    cout << "Dinámica: " << dynamicProgramming(15, items) << endl;
-
+    printResult(backtrackingSinPoda(15, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(15, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(15, items), "Backtracking optimalidad: ");
+    printResult(dynamicProgramming(15, items), "Dinámica: ");
+    cout<<endl;
 }
 
 void test3(){
-    item item1; item item2; item item3; item item4; item item5;
-    item1.size = 10; item1.value = 5;
-    item2.size = 15; item2.value = 4;
-    item3.size = 5; item3.value = 13;
-    item4.size = 10; item4.value = 8;
-    item5.size = 5; item5.value = 8;
+    Item item1 = Item(5, 10);
+    Item item2 = Item(4, 15);
+    Item item3 = Item(13, 5);
+    Item item4 = Item(8, 10);
+    Item item5 = Item(8, 5);
 
-    vector<item> items = {item1, item2, item3, item4, item5};
+    vector<Item> items = {item1, item2, item3, item4, item5};
     cout<<"Test3. Valor Correcto: 29"<<endl;
 
-    cout << "Bruteforce: " << bruteforce(25, items) << endl;
-    cout << "Meet in the middle: " << meet_in_the_middle(25, items) << endl;
-    cout << "Backtracking: " << backtracking(25, items) << endl;
-    cout << "Dinámica: " << dynamicProgramming(25, items) << endl;
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
 }
 
-int main(){
-    test3();
+void test4(){
+    Item item1 = Item(5, 10);
+    Item item2 = Item(4, 15);
+    Item item3 = Item(13, 5);
+    Item item4 = Item(8, 10);
+    Item item5 = Item(8, 5);
+    Item item6 = Item(5, 25);
 
-    return 1;
+    vector<Item> items = {item1, item2, item3, item4, item5, item6};
+    cout<<"Test4. Valor Correcto: 29"<<endl;
+
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
+}
+
+void test5(){
+    Item item3 = Item(13, 5);
+    Item item4 = Item(8, 10);
+    Item item5 = Item(8, 5);
+
+    vector<Item> items = {item3, item4, item5};
+    cout<<"Test5. Valor Correcto: 29"<<endl;
+
+    printResult(bruteforce(25, items), "Bruteforce: ");
+    printResult(meet_in_the_middle(25, items), "Meet: ");
+    printResult(backtracking(25, items), "Backtracking: ");
+    printResult(backtrackingSinPoda(25, items), "Backtracking sin poda: ");
+    printResult(backtrackingPodaFactibilidad(25, items), "Backtracking factibilidad: ");
+    printResult(backtrackingPodaOptimalidad(25, items), "Backtracking optimalidad: ");
+    printResult(dynamicProgramming(25, items), "Dinámica: ");
+    cout<<endl;
+}
+
+
+int main(){
+    unsigned long n;
+    unsigned long bkpSize;
+    vector<Item> items;
+
+    cin >> n;
+    cin >> bkpSize;
+
+    for (int i = 0; i < n; i++) {
+        unsigned long weight;
+        unsigned long value;
+        cin >> weight;
+        cin >> value;
+        items.emplace_back(Item(value, weight));
+    }
+
+    cout << "Fuerza bruta: " << bruteforce(bkpSize, items) << endl;
+    cout << "MitM: " << meet_in_the_middle(bkpSize, items) << endl;
+    cout << "Backtracking: " << backtracking(bkpSize, items) << endl;
+    cout << "DP: " << dynamicProgramming(bkpSize, items) << endl;
+
 }

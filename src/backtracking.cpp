@@ -1,80 +1,78 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
-#include "utilities/types.h"
 #include "backtracking.h"
 
 using namespace std;
 
-bool isLighter(const item& a, const item& b) {
-    return a.size < b.size;
-}
-
-bool isMoreValuable(const item& a, const item& b){
-    return a.value > b.value;
+bool isMoreEfficient(const Item& a, const Item& b) {
+    return a.getValue() / a.getSize() > b.getValue() / b.getSize();
 }
 
 //Poda de factibilidad: si ninguno de los items restantes entra en la mochila, corta la rama
-bool hasRoomForMore(int i, backpack const &bkp, vector<item> const &items) {
-    //Precondición: el vector items debe estar ordenado crecientemente por peso
-    return items[i].size <= bkp.size - bkp.load;
+bool hasRoomForMore(int i, const Backpack &bkp, vector<Item> const &items) {
+    Item smallestItem = items[i];
+    for (int j = i; j < items.size(); j++) {
+        if (items[j].isLighter(smallestItem)) {
+            smallestItem = items[j];
+        }
+    }
+    return smallestItem.getSize() <= bkp.getFreeSpace();
 }
 
-int solveFractionalKnapsackProblem(int i, backpack const &bkp, vector<item> const &items) {
-    int extraLoad = 0;
-    int extraValue = 0;
-    int j = i;
-    while (bkp.load + extraLoad <= bkp.size && j < items.size()) {
-        extraLoad += items[j].size;
-        extraValue += items[j].value;
-        j++;
+void solveFractionalKnapsackProblem(int i, Backpack &bkp, vector<Item> const &items) {
+    //Precondición: el vector  debe estar ordenado decrecientemente por valor/peso
+    for (int j = i; j < items.size(); j++) {
+        if (items[j].getSize() <= bkp.getFreeSpace()) {
+            bkp.addItem(items[j]);
+        } else {
+            unsigned long fitableValue = ((items[j].getValue() / items[j].getSize()) * bkp.getFreeSpace());
+            bkp.setValue(bkp.getValue() + fitableValue);
+            bkp.setLoad(bkp.getSize());
+            return;
+        }
     }
-    return extraValue;
 }
 
 //Poda de optimalidad: si la suma del valor actual y de la suma del valor de los items que entran en la mochila
 //no superan al máximo valor alcanzado hasta el momento, corta la rama
-bool maxValueIsReachable(int i, backpack const &bkp, vector<item> const &items, int &maxValue) {
-    //Precondición: el vector items debe estar ordenado crecientemente por peso
-    int maxPossibleRemainingValue = solveFractionalKnapsackProblem(i, bkp, items);
-    return bkp.value + maxPossibleRemainingValue > maxValue;
+bool maxValueIsReachable(int i, const Backpack &bkp, vector<Item> const &items, unsigned long &maxValue) {
+    //Precondición: el vector debe estar ordenado decrecientemente por valor/peso
+    Backpack subBackpack = Backpack(bkp.getSize() - bkp.getLoad());
+
+    solveFractionalKnapsackProblem(i, subBackpack, items);
+    return bkp.getValue() + subBackpack.getValue() > maxValue;
 }
 
-backpack backtrackingRecursion(int i, backpack bkp, vector<item> const &items, int maxValue) {
+Backpack backtrackingRecursion(int i, Backpack bkp, vector<Item> const &items, unsigned long &maxValue) {
     if (i >= items.size() || !hasRoomForMore(i, bkp, items) || !maxValueIsReachable(i, bkp, items, maxValue)) {
-        if (bkp.value > maxValue) {
-            maxValue = bkp.value;
+        if (bkp.getValue() > maxValue) {
+            maxValue = bkp.getValue();
         }
         return bkp;
     }
-    backpack backpackWithoutItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
+    Backpack backpackWithoutItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
 
-    if (bkp.load + items[i].size > bkp.size) {
+    if (bkp.getLoad() + items[i].getSize() > bkp.getSize()) {
         return backpackWithoutItem;
     }
+    bkp.addItem(items[i]);
+    Backpack backpackWithItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
 
-    bkp.load += items[i].size;
-    bkp.value += items[i].value;
-    bkp.items.push_back(items[i]);
-    backpack backpackWithItem = backtrackingRecursion(i + 1, bkp, items, maxValue);
-
-    if (backpackWithItem.value > backpackWithoutItem.value) {
+    if (backpackWithItem.getValue() > backpackWithoutItem.getValue()) {
         return backpackWithItem;
     } else {
         return backpackWithoutItem;
     }
 }
 
-int backtracking(int bkpSize, vector<item> &items) {
-    backpack bkp;
-    bkp.value = 0;
-    bkp.load = 0;
-    bkp.size = bkpSize;
+unsigned long backtracking(unsigned long bkpSize, vector<Item> &items) {
+    Backpack bkp = Backpack(bkpSize);
 
-    //Se ordena primero por valor decreciente y luego con un algoritmo estable por tamaño creciente
-    //El ordenamiento se usa en las podas
-    sort(items.begin(), items.end(), isMoreValuable);
-    stable_sort(items.begin(), items.end(), isLighter);
+    //Se ordena decrecientemente por coeficiente valor/peso
+    sort(items.begin(), items.end(), isMoreEfficient);
 
-    return backtrackingRecursion(0, bkp, items, 0).value;
+    unsigned long maxValue = 0;
+
+    return backtrackingRecursion(0, bkp, items, maxValue).getValue();
 };

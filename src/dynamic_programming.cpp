@@ -1,20 +1,18 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-
-#include "utilities/types.h"
+#include "utilities/item.h"
 
 using namespace std;
 
-int dynamicProgramming(int bkpSize, vector<item> const &items) {
-    vector<vector<int>> cache(bkpSize + 1, vector<int>(items.size() + 1));
+unsigned long dynamicProgramming(unsigned long bkpSize, vector<Item> const &items) {
+    vector<vector<unsigned long>> cache(bkpSize + 1, vector<unsigned long>(items.size() + 1));
 
     for (int size = 1; size < bkpSize + 1; size++) {
         for (int i = 1; i < items.size() + 1; i++) {
-            if (items[i-1].size > size) {
+            if (items[i-1].getSize() > size) {
                 cache[size][i] = cache[size][i - 1];
             } else {
-                cache[size][i] = max(cache[size][i - 1], items[i-1].value + cache[size - items[i-1].size][i - 1]);
+                cache[size][i] = max(cache[size][i - 1], items[i-1].getValue() + cache[size - items[i-1].getSize()][i - 1]);
             }
         }
     }
